@@ -1,1 +1,1 @@
-pipenv run uvicorn app.main:app --port 8000
+pipenv run uvicorn app.main:app --reload --port 8000
