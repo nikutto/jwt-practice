@@ -1,6 +1,5 @@
-from typing import Optional
-from fastapi import APIRouter, Response, Header, status
-from app.request_entity import ConsentRequest
+from fastapi import APIRouter, Response, status
+from app.request_entity import ConsentRequest, TokenRequest
 import app.service as service
 
 router = APIRouter()
@@ -14,9 +13,10 @@ async def consent(consent_request: ConsentRequest):
     ret = service.consent(consent_request.user_id, consent_request.password)
     return {"authorization_code": ret}
 
-@router.post("/oauth/authorize")
-async def authorize():
-    return {"jwt": "XXX.YYY.ZZZ"} # TODO: return real jwt token
+@router.post("/oauth/token")
+async def token(token_request: TokenRequest):
+    ret = service.token(token_request.authorization_code)
+    return {"jwt": ret}
 
 @router.post("/oauth/verify")
 async def verify():
