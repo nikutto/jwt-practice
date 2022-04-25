@@ -4,8 +4,14 @@ import app.myjwt as myjwt
 
 test_user = {
     "user_id": "test_user_id",
-    "password": "test_pass"
+    "password": "test_pass",
+    "email": "i_need_this@mail.com"
+
 }
+user_dict = {
+    test_user["user_id"]: test_user
+} 
+
 test_authorization_code = "THIS_IS_AUTHORIZATION_CODE"
 
 def is_correct_user(user_id: str, password: str): # TODO
@@ -18,8 +24,7 @@ def consent(user_id: str, password: str):
         raise HTTPException(status_code = 401, detail = "user id or password is wrong.")
 
 def create_payload():
-    # iat = int(time.time())
-    iat = 1650803264
+    iat = int(time.time())
     duration = 600
     exp = int(iat + duration)
     return {
@@ -36,3 +41,13 @@ def token(authorization_code: str):
         return myjwt.encode(payload)
     else:
         raise HTTPException(status_code = 401, detail = "Invalid authorization code.")
+
+def get_email(id_token: str):
+    payload = myjwt.decode(id_token)
+    # try:
+    #     payload = myjwt.decode(id_token)
+    # except:
+    #     raise HTTPException(status_code = 401, detail = "Invalid id token")
+    user_id = payload["sub"]
+    email = user_dict[user_id]["email"]
+    return email
