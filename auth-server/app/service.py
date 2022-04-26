@@ -43,11 +43,10 @@ def token(authorization_code: str):
         raise HTTPException(status_code = 401, detail = "Invalid authorization code.")
 
 def get_email(id_token: str):
-    payload = myjwt.decode(id_token)
-    # try:
-    #     payload = myjwt.decode(id_token)
-    # except:
-    #     raise HTTPException(status_code = 401, detail = "Invalid id token")
+    try:
+        payload = myjwt.decode(id_token)
+    except:
+        raise HTTPException(status_code = 401, detail = "Invalid id token")
     user_id = payload["sub"]
     email = user_dict[user_id]["email"]
     return email
