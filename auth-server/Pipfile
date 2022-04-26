@@ -9,6 +9,8 @@ uvicorn = "*"
 pydantic = "*"
 mypy = "*"
 pipfile = "*"
+flake8 = "*"
+black = "*"
 
 [dev-packages]
 
