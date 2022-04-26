@@ -19,7 +19,7 @@ def is_correct_user(user_id: str, password: str) -> bool:
 
 def consent(user_id: str, password: str) -> str:
     if is_correct_user(user_id, password):
-        return test_authorization_code  # TODO: return real authentication_token
+        return test_authorization_code
     else:
         raise HTTPException(status_code=401, detail="user id or password is wrong.")
 
@@ -48,7 +48,7 @@ def token(authorization_code: str) -> str:
 def get_email(id_token: str) -> str:
     try:
         payload = myjwt.decode(id_token)
-    except:
+    except Exception:
         raise HTTPException(status_code=401, detail="Invalid id token")
     user_id = payload["sub"]
     email = user_dict[user_id]["email"]
