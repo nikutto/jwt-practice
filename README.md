@@ -11,7 +11,7 @@
 ```run.sh
 cd auth-server
 docker build -t auth-server-service .
-docker run -p 8000:8000 auth-server
+docker run -p 8000:8000 auth-server-service
 ```
 
 - Test JWT authentication
