@@ -57,7 +57,7 @@ SAMLとの違い
 Cons.の理由からロングタームな認証トークンとしては使えない。
 このため比較的有効期限が長くstatefulなリフレッシュトークンと併用する。リフレッシュトークンはstatefulなトークンでサーバーに送ることで一度だけ新しいリフレッシュトークンとid tokenを再発行できる。これによってstatelessのメリットを利用しつつ、statelessの弱点をカバーできる。
 
-## Authorization codeとは？（SSOで直接id tokenを得られないのはなぜ？）
+## Authorization codeとは？（OpenIDConnectで直接id tokenを得られないのはなぜ？）
 
 OpenIDConnectにおける
 ID tokenは以下のフローで入手できる。
