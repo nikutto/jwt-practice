@@ -7,21 +7,21 @@ import app.service as service
 router = APIRouter()
 
 @router.get("/")
-async def root():
+async def root() -> dict[str, str]:
     return {"message": "Hello world"}
 
 @router.post("/oauth/consent")
-async def consent(consent_request: ConsentRequest):
+async def consent(consent_request: ConsentRequest) -> dict[str, str]:
     ret = service.consent(consent_request.user_id, consent_request.password)
     return {"authorization_code": ret}
 
 @router.post("/oauth/token")
-async def token(token_request: TokenRequest):
+async def token(token_request: TokenRequest) -> dict[str, str]:
     ret = service.token(token_request.authorization_code)
     return {"id_token": ret}
 
 @router.get("/api/profile/email")
-async def profile(authorization: Optional[str] = Header(None)):
+async def profile(authorization: Optional[str] = Header(None)) -> dict[str, str]:
     if authorization is None:
         raise HTTPException(status_code = 401, detail = "Need Authorization header.")
     match = re.fullmatch(r" Bearer (.*)", authorization)
