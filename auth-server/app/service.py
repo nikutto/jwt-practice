@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 import time
 import app.myjwt as myjwt
+from typing import Any
 
 test_user = {
     "user_id": "test_user_id",
@@ -14,16 +15,16 @@ user_dict = {
 
 test_authorization_code = "THIS_IS_AUTHORIZATION_CODE"
 
-def is_correct_user(user_id: str, password: str): # TODO
+def is_correct_user(user_id: str, password: str) -> bool:
     return user_id == test_user["user_id"] and password == test_user["password"]
 
-def consent(user_id: str, password: str):
+def consent(user_id: str, password: str) -> str:
     if is_correct_user(user_id, password):
         return test_authorization_code # TODO: return real authentication_token
     else:
         raise HTTPException(status_code = 401, detail = "user id or password is wrong.")
 
-def create_payload():
+def create_payload() -> dict[str, Any]:
     iat = int(time.time())
     duration = 600
     exp = int(iat + duration)
@@ -34,7 +35,7 @@ def create_payload():
         "sub": test_user["user_id"],
     }
 
-def token(authorization_code: str):
+def token(authorization_code: str) -> str:
     if authorization_code == test_authorization_code:
         payload = create_payload()
         print(payload)
@@ -42,7 +43,7 @@ def token(authorization_code: str):
     else:
         raise HTTPException(status_code = 401, detail = "Invalid authorization code.")
 
-def get_email(id_token: str):
+def get_email(id_token: str) -> str:
     try:
         payload = myjwt.decode(id_token)
     except:
